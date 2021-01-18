@@ -24,19 +24,25 @@ pipeline {
 
                 // Run Maven on a Unix agent.
                 //sh "mvn -Dmaven.test.failure.ignore=true clean package"
-                sh './mvnw clean compile'
+                // sh './mvnw clean compile'
+                sh './good.sh'
                 // To run Maven on a Windows agent, use
                 // bat "mvn -Dmaven.test.failure.ignore=true clean package"
             }
 
-/*             post {
+             post {
                 // If Maven was able to run the tests, even if some of the test
                 // failed, record the test results and archive the jar file.
-                always {
+                /* always {
                     junit '*target/surefire-reports/TEST-*.xml'
                     archiveArtifacts 'target/*.jar'
+                } */
+                changed {
+                    emailext body: 'Please go to ${BUILD_URL} and verify the build',
+                    subject: 'Job \'${JOB_NAME}\' (${BUILD_NUMBER}) is waiting for input',
+                    to: 'v.vulchev@gmail.com'
                 }
-            } */
+            }
         }
     }
 }
