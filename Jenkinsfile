@@ -1,5 +1,6 @@
 pipeline {
     agent any
+    triggers { pollSCM('* * * * *') }
 
 /*    tools {
         // Install the Maven version configured as "M3" and add it to the path.
@@ -7,11 +8,11 @@ pipeline {
     }*/
 
     stages {
-        stage('Checkout') {
+        /* stage('Checkout') {
             steps {
                 git url: 'https://github.com/valchevv/jgsu-spring-petclinic.git', branch: 'main'
             }
-        }
+        } */
         
         stage('Build') {
             steps {
